@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="FunnySounds.Controls.SoundControl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FunnySounds.Controls"
+      mc:Ignorable="d" 
+      HorizontalAlignment="Stretch" VerticalAlignment="Top" MinWidth="550" >
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                <CheckBox VerticalAlignment="Center" x:Name="isActiveCheckBox" Click="ActiveCB_Clicked"/>
+                <TextBox x:Name="nameTextBox" Text="Custom Sound Name" VerticalContentAlignment="Center" TextChanged="NameTextChanged"/>
+            </StackPanel>
+            <DockPanel Grid.Column="1">
+                <Label Content="|  Frequency:"/>
+                <Slider x:Name="oddsSlider" VerticalAlignment="Center" Maximum="1" SmallChange="0.01" LargeChange="0.1" ValueChanged="FrequencyChanged" DockPanel.Dock="Right"/>
+            </DockPanel>
+            <DockPanel Grid.Column="2">
+                <Label Content="|  Volume:"/>
+                <Slider x:Name="volumeSlider" VerticalAlignment="Center" Maximum="1" SmallChange="0.01" LargeChange="0.1" ValueChanged="VolumeChanged" DockPanel.Dock="Right"/>
+            </DockPanel>
+        </Grid>
+        <Separator VerticalAlignment="Bottom" Grid.Row="1" Margin="0,0,0,0"/>
+    </Grid>
+</UserControl>

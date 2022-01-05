@@ -1,0 +1,62 @@
+﻿<Window x:Class="FunnySounds.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FunnySounds"
+        mc:Ignorable="d"
+        Title="Funny Sounds" Height="450" Width="580">
+    <Grid Margin="8,8,8,8">
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" HorizontalAlignment="Left">
+                    <Label Content="Sounds Frequency:" ToolTip="Calculated every 0.5 seconds"/>
+                    <Slider x:Name="globalFrequencySlider" Maximum="1" LargeChange="0.1" SmallChange="0.01" MinWidth="125" VerticalAlignment="Center" HorizontalAlignment="Stretch" TickPlacement="None" ValueChanged="GlobalFrequencyChanged" Value="0.5" Width="125"/>
+                    <Label Name="currentGlobalFrequency" Content="50%"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" HorizontalAlignment="Right" Grid.Column="1">
+                    <Label Content="Sounds Volume:" ToolTip="Calculated every 0.5 seconds"/>
+                    <Slider x:Name="globalVolumeSlider" Maximum="1" LargeChange="0.1" SmallChange="0.01" MinWidth="125" VerticalAlignment="Center" HorizontalAlignment="Stretch" TickPlacement="None" ValueChanged="GlobalVolumeChanged" Value="1" Width="125"/>
+                    <Label Name="currentGlobalVolumeLabel" Content="100%"/>
+                </StackPanel>
+            </Grid>
+            <Separator Margin="0,2,0,5"/>
+            <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="250" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="soundsPanel" HorizontalAlignment="Left"/>
+            </ScrollViewer>
+            <Separator/>
+            <Label Content="Add Sound" HorizontalAlignment="Center"/>
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Link:" Margin="0,0,5,0"/>
+                <TextBox x:Name="linkTextBox" Text="Link" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0"/>
+                <TextBox x:Name="linkSoundNameBox" Text="Name" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
+                <Button Content="Add" Grid.Column="3" Click="AddSoundFromLinkClicked" Grid.ColumnSpan="2"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Link:" Margin="0,0,5,0"/>
+                <TextBox x:Name="fileTextBox" Text="Drop file here" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0" Drop="FileDropped" PreviewDragOver="TextBox_PreviewDragOver" AllowDrop="True"/>
+                <TextBox x:Name="fileSoundNameBox" Text="Name" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
+                <Button Content="Copy file" Grid.Column="3" Click="CopyDraggedFilesClicked" Margin="0,0,5,0"/>
+                <Button Content="Link file" Grid.Column="4" Click="LinkDraggedFilesClicked"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
