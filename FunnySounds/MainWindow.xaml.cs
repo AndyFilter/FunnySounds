@@ -36,11 +36,6 @@ namespace FunnySounds
         {
             InitializeComponent();
 
-            if (!Directory.Exists(dataDir))
-            {
-                Directory.CreateDirectory(Structs.dataDir);
-            }
-
             var _UserData = Utils.GetUserData();
 
             if (_UserData != null)
@@ -52,7 +47,15 @@ namespace FunnySounds
             else
                 userData = new Structs.UserData();
 
-            LoadBasicAudio();
+            if (!Directory.Exists(dataDir))
+            {
+                Directory.CreateDirectory(Structs.dataDir);
+                FirstTimeSetup();
+            }
+            if (!File.Exists(Path.Combine(Structs.dataDir, "UserData.json")))
+                FirstTimeSetup();
+            else
+                LoadBasicAudio();
 
             playerTimer.Elapsed += new ElapsedEventHandler(playAudioTick);
             playerTimer.Interval = 500;
@@ -60,13 +63,13 @@ namespace FunnySounds
 
         }
 
-        public async void LoadBasicAudio()
+        private async void FirstTimeSetup()
         {
-            var Sound1 =  Utils.DownloadAudio("https://www.myinstants.com/media/sounds/fart-with-reverb.mp3", "Fard");
-            var Sound2 =  Utils.DownloadAudio("https://www.myinstants.com/media/sounds/yt1s_wU4BGgD.mp3", "WhatTheDogDoin");
-            var Sound3 =  Utils.DownloadAudio("https://www.myinstants.com/media/sounds/deeznuts_2.mp3", "DeezNuts");
-            var Sound4 =  Utils.DownloadAudio("https://www.myinstants.com/media/sounds/among-us-roundstart.mp3", "Amugus");
-            var Sound5 =  Utils.DownloadAudio("https://www.myinstants.com/media/sounds/vine-boom.mp3", "Vine Boom");
+            var Sound1 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/fart-with-reverb.mp3", "Fard");
+            var Sound2 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/yt1s_wU4BGgD.mp3", "WhatTheDogDoin");
+            var Sound3 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/deeznuts_2.mp3", "DeezNuts");
+            var Sound4 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/among-us-roundstart.mp3", "Amugus");
+            var Sound5 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/vine-boom.mp3", "Vine Boom");
 
             await Task.WhenAll(Sound1, Sound2, Sound3, Sound4, Sound5);
 
@@ -76,15 +79,44 @@ namespace FunnySounds
             availableSounds.Add(Sound4.Result);
             availableSounds.Add(Sound5.Result);
 
-            foreach (var fileSound in userData.sounds)
+            foreach (var sound in availableSounds.ToList())
             {
-                if (!availableSounds.Any(x => x.name == fileSound.name))
-                    availableSounds.Add(fileSound);
-                else
-                    availableSounds[availableSounds.IndexOf(availableSounds.First(x => x.name == fileSound.name))] = fileSound;
+                var soundControl = new Controls.SoundControl(sound);
+                soundsPanel.Children.Add(soundControl);
             }
 
-            foreach (var sound in availableSounds)
+            userData.sounds = availableSounds;
+
+            SaveUserData();
+        }
+
+        public void LoadBasicAudio()
+        {
+            //var Sound1 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/fart-with-reverb.mp3", "Fard");
+            //var Sound2 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/yt1s_wU4BGgD.mp3", "WhatTheDogDoin");
+            //var Sound3 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/deeznuts_2.mp3", "DeezNuts");
+            //var Sound4 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/among-us-roundstart.mp3", "Amugus");
+            //var Sound5 = Utils.DownloadAudio("https://www.myinstants.com/media/sounds/vine-boom.mp3", "Vine Boom");
+
+            //await Task.WhenAll(Sound1, Sound2, Sound3, Sound4, Sound5);
+
+            //availableSounds.Add(Sound1.Result);
+            //availableSounds.Add(Sound2.Result);
+            //availableSounds.Add(Sound3.Result);
+            //availableSounds.Add(Sound4.Result);
+            //availableSounds.Add(Sound5.Result);
+
+            //foreach (var fileSound in userData.sounds)
+            //{
+            //    if (!availableSounds.Any(x => x.name == fileSound.name))
+            //        availableSounds.Add(fileSound);
+            //    else
+            //        availableSounds[availableSounds.IndexOf(availableSounds.First(x => x.name == fileSound.name))] = fileSound;
+            //}
+
+            availableSounds = userData.sounds;
+
+            foreach (var sound in availableSounds.ToList())
             {
                 var soundControl = new Controls.SoundControl(sound);
                 soundsPanel.Children.Add(soundControl);
@@ -161,7 +193,22 @@ namespace FunnySounds
 
         public void SaveUserData()
         {
+            userData.globalVolume = globalVolume;
+            userData.globalFrequency = globalOdds;
+            //userData.sounds.ToList().ForEach(sound => { if (sound.isDeleted) userData.sounds.Remove(sound); });
             Utils.SaveUserData(userData);
+        }
+
+        public void RemoveSound(Structs.Sound soundToRemove)
+        {
+            userData.sounds.Remove(soundToRemove);
+
+            foreach (var child in soundsPanel.Children)
+            {
+                var dataContext = (child as Controls.SoundControl).DataContext as Structs.Sound;
+                if (DataContext != null && dataContext.path == soundToRemove.path) //NULL
+                    soundsPanel.Children.Remove(child as UIElement);
+            }
         }
 
         private void FileDropped(object sender, DragEventArgs e)
@@ -248,13 +295,19 @@ namespace FunnySounds
             }
             newSound.path = Path.Combine(Structs.dataDir, Path.GetFileName(droppedSoundFile.path));
 
-            availableSounds.Add(newSound);
-            availableSounds.Remove(soundToReplace);
+            //availableSounds.Add(newSound);
+            //availableSounds.Remove(soundToReplace);
             userData.sounds.Add(newSound);
-            userData.sounds.Remove(soundToReplace);
+            //userData.sounds.Remove(soundToReplace);
 
             var soundControl = new Controls.SoundControl(newSound);
             soundsPanel.Children.Add(soundControl);
+            //foreach (var child in soundsPanel.Children)
+            //{
+            //    var dataContext = (child as Controls.SoundControl).DataContext as Structs.Sound;
+            //    if (DataContext != null && dataContext.path == droppedSoundFile.path)
+            //        soundsPanel.Children.Remove(child as UIElement);
+            //}
             //soundsPanel.Children.Cast<Controls.SoundControl>().ToList().ForEach(soundControl => soundControl.) //USE THE DATACONTEXT
 
             Utils.SaveUserData(userData);
@@ -280,7 +333,7 @@ namespace FunnySounds
         private void LinkDraggedFilesClicked(object sender, RoutedEventArgs e)
         {
             if(droppedSoundFile == null) return;
-            availableSounds.Add(droppedSoundFile);
+            //availableSounds.Add(droppedSoundFile);
             userData.sounds.Add(droppedSoundFile);
 
             var soundControl = new Controls.SoundControl(droppedSoundFile);

@@ -25,8 +25,8 @@ namespace FunnySounds
         public class UserData //I've made a class from this data in case I want to add some more parameters to it in the future.
         {
             public List<Sound> sounds { get; set; } = new List<Sound>();
-            public float globalFrequency { get; set; }
-            public float globalVolume { get; set; }
+            public float globalFrequency { get; set; } = 0.5f;
+            public float globalVolume { get; set; } = 1f;
         }
     }
 }

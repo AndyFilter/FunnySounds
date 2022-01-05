@@ -21,6 +21,7 @@ namespace FunnySounds.Controls
     public partial class SoundControl : UserControl
     {
         private Structs.Sound controledSound = null;
+        private MainWindow mainWindow = (App.Current.MainWindow as MainWindow)!;
         public SoundControl(Structs.Sound sound)
         {
             InitializeComponent();
@@ -41,19 +42,19 @@ namespace FunnySounds.Controls
         private void ActiveCB_Clicked(object sender, RoutedEventArgs e)
         {
             controledSound.isEnabled = isActiveCheckBox.IsChecked!.Value;
-            (App.Current.MainWindow as MainWindow)?.SaveUserData();
+            mainWindow.SaveUserData();
         }
 
         private void FrequencyChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             controledSound.odds = (float)oddsSlider.Value;
-            (App.Current.MainWindow as MainWindow)?.SaveUserData();
+            mainWindow.SaveUserData();
         }
 
         private void VolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             controledSound.volume = (float)volumeSlider.Value;
-            (App.Current.MainWindow as MainWindow)?.SaveUserData();
+            mainWindow.SaveUserData();
         }
 
         private void NameTextChanged(object sender, TextChangedEventArgs e)
@@ -61,7 +62,16 @@ namespace FunnySounds.Controls
             if (controledSound != null)
             {
                 controledSound.name = nameTextBox.Text;
-                (App.Current.MainWindow as MainWindow)?.SaveUserData();
+                mainWindow.SaveUserData();
+            }
+        }
+
+        private void DeleteSoundClicked(object sender, RoutedEventArgs e)
+        {
+            if (controledSound != null)
+            {
+                mainWindow.RemoveSound(controledSound);
+                mainWindow.SaveUserData();
             }
         }
     }
