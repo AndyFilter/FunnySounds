@@ -1,3 +1,5 @@
+![GitHub all releases](https://img.shields.io/github/downloads/AndyFilter/Funnysounds/total) ![GitHub top language](https://img.shields.io/github/languages/top/Andyfilter/FunnySounds) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/AndyFilter/Funnysounds) ![GitHub](https://img.shields.io/github/license/AndyFilter/FunnySounds)
+
 # Make it Funny
 Tired of opening like **20 tabs** of videos like: *One Hour of Silence Broken Only by Random **XYZ** sound effects*? Perhaps running out of RAM, because You are using *Chrome*?
 Well, I've got something just for **You**. You can have all Your **funny sounds** and RAM at the **SAME TIME!**. All You need to do is **follow these few simple steps below**!
