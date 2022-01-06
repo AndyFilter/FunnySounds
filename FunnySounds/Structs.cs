@@ -16,7 +16,7 @@ namespace FunnySounds
             public float volume { get; set; } = 0.5f;
             public bool isEnabled { get; set; } = true;
 
-            public List<System.Windows.Media.MediaPlayer> mediaPlayers = new();
+            public List<System.Windows.Media.MediaPlayer> mediaPlayers = new List<System.Windows.Media.MediaPlayer>();
         }
 
         [Serializable]

@@ -77,7 +77,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Link:" Margin="0,0,5,0"/>
-                <TextBox x:Name="fileTextBox" Text="Drop file here" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0" Drop="FileDropped" PreviewDragOver="TextBox_PreviewDragOver" AllowDrop="True" Focusable="False"/>
+                <TextBox x:Name="fileTextBox" Text="Drop file here" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0"  AllowDrop="True" Focusable="False" Drop="FileDropped" PreviewDragOver="TextBox_PreviewDragOver"/>
                 <TextBox x:Name="fileSoundNameBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
                 <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray" Grid.Column="2">
                     <TextBlock.Style>
@@ -91,8 +91,8 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <Button Content="Copy file" Grid.Column="3" Click="CopyDraggedFilesClicked" Margin="0,0,5,0"/>
-                <Button Content="Link file" Grid.Column="4" Click="LinkDraggedFilesClicked"/>
+                <Button Content="Copy file" Grid.Column="3" Click="CopyDraggedFilesClicked" Margin="0,0,5,0" ToolTip="Copies the file into a super secret location in program's local folder (%appdata%\FunnySounds)"/>
+                <Button Content="Link file" Grid.Column="4" Click="LinkDraggedFilesClicked" ToolTip="Links the sound to already existing audio file on the disk"/>
             </Grid>
         </StackPanel>
     </Grid>

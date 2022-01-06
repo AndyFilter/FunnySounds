@@ -93,9 +93,18 @@ namespace FunnySounds
 
             foreach (var sound in availableSounds.ToList())
             {
-                var soundControl = new Controls.SoundControl(sound);
-                soundsPanel.Children.Add(soundControl);
+                if (File.Exists(sound.path))
+                {
+                    var soundControl = new Controls.SoundControl(sound);
+                    soundsPanel.Children.Add(soundControl);
+                }
+                else
+                {
+                    userData.sounds.Remove(sound);
+                    MessageBox.Show($"Linked sound '{sound.name}' located at: {sound.path} had to removed, because it was deleted from the disk");
+                }
             }
+            SaveUserData();
         }
 
         private void playAudioTick(object source, ElapsedEventArgs e)
@@ -219,23 +228,21 @@ namespace FunnySounds
 
         private void FileDropped(object sender, DragEventArgs e)
         {
-            var name = fileSoundNameBox.Text;
-
-            if (name == null)
-            {
-                MessageBox.Show("Please put in the name/link");
-                return;
-            }
-
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 //droppedSoundFiles.Clear();
-                fileTextBox.Text = "";
+                //fileTextBox.Text = "";
                 // Note that you can have more than one file.
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var file = files[0];
 
-                var sound = new Structs.Sound() { path = file, name = name };
+                if (!Structs.AUDIO_FILE_EXTENSIONS.Contains(Path.GetExtension(file).ToLower()))
+                {
+                    MessageBox.Show("Incorrect file extension. Make sure it ends with e.g. '.mp3' or '.wav'");
+                    return;
+                }
+
+                var sound = new Structs.Sound() { path = file };
                 droppedSoundFile = sound;
 
                 fileTextBox.Text = Path.GetFileName(file);
@@ -275,6 +282,11 @@ namespace FunnySounds
                 return;
             }
             var newSound = droppedSoundFile;
+            if (fileSoundNameBox.Text == null || fileSoundNameBox.Text.Length <= 0)
+            {
+                MessageBox.Show("Please put in the name/link");
+                return;
+            }
             try
             {
                 File.Copy(droppedSoundFile.path, Path.Combine(Structs.dataDir, Path.GetFileName(droppedSoundFile.path)));
@@ -345,6 +357,11 @@ namespace FunnySounds
         private void LinkDraggedFilesClicked(object sender, RoutedEventArgs e)
         {
             if (droppedSoundFile == null) return;
+            if (fileSoundNameBox.Text == null || fileSoundNameBox.Text.Length <= 0)
+            {
+                MessageBox.Show("Please put in the name/link");
+                return;
+            }
             if (userData.sounds.Any(sound => sound.name == droppedSoundFile.name))
             {
                 MessageBox.Show("Sound with this name already exists");
