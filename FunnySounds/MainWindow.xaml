@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FunnySounds"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="Funny Sounds" Height="450" Width="580">
     <Grid Margin="8,8,8,8">
         <StackPanel>
@@ -39,8 +40,32 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Link:" Margin="0,0,5,0"/>
-                <TextBox x:Name="linkTextBox" Text="Link" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0"/>
-                <TextBox x:Name="linkSoundNameBox" Text="Name" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
+                <TextBox x:Name="linkTextBox"  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0" ToolTip="Link should end with any audio extension, cannot be a redirect"/>
+                <TextBlock IsHitTestVisible="False" Text="Link" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray" Grid.Column="1">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=linkTextBox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBox x:Name="linkSoundNameBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
+                <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray" Grid.Column="2">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=linkSoundNameBox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <Button Content="Add" Grid.Column="3" Click="AddSoundFromLinkClicked" Grid.ColumnSpan="2"/>
             </Grid>
             <Grid>
@@ -52,8 +77,20 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Link:" Margin="0,0,5,0"/>
-                <TextBox x:Name="fileTextBox" Text="Drop file here" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0" Drop="FileDropped" PreviewDragOver="TextBox_PreviewDragOver" AllowDrop="True"/>
-                <TextBox x:Name="fileSoundNameBox" Text="Name" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
+                <TextBox x:Name="fileTextBox" Text="Drop file here" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0" Drop="FileDropped" PreviewDragOver="TextBox_PreviewDragOver" AllowDrop="True" Focusable="False"/>
+                <TextBox x:Name="fileSoundNameBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
+                <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray" Grid.Column="2">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=fileSoundNameBox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <Button Content="Copy file" Grid.Column="3" Click="CopyDraggedFilesClicked" Margin="0,0,5,0"/>
                 <Button Content="Link file" Grid.Column="4" Click="LinkDraggedFilesClicked"/>
             </Grid>

@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FunnySounds.Controls
 {
@@ -20,7 +8,7 @@ namespace FunnySounds.Controls
     /// </summary>
     public partial class SoundControl : UserControl
     {
-        private Structs.Sound controledSound = null;
+        private Structs.Sound? controledSound = null;
         private MainWindow mainWindow = (App.Current.MainWindow as MainWindow)!;
         public SoundControl(Structs.Sound sound)
         {
@@ -41,20 +29,29 @@ namespace FunnySounds.Controls
 
         private void ActiveCB_Clicked(object sender, RoutedEventArgs e)
         {
-            controledSound.isEnabled = isActiveCheckBox.IsChecked!.Value;
-            mainWindow.SaveUserData();
+            if (controledSound != null)
+            {
+                controledSound.isEnabled = isActiveCheckBox.IsChecked!.Value;
+                mainWindow.SaveUserData();
+            }
         }
 
         private void FrequencyChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            controledSound.odds = (float)oddsSlider.Value;
-            mainWindow.SaveUserData();
+            if (controledSound != null)
+            {
+                controledSound.odds = (float)oddsSlider.Value;
+                mainWindow.SaveUserData();
+            }
         }
 
         private void VolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            controledSound.volume = (float)volumeSlider.Value;
-            mainWindow.SaveUserData();
+            if (controledSound != null)
+            {
+                controledSound.volume = (float)volumeSlider.Value;
+                mainWindow.SaveUserData();
+            }
         }
 
         private void NameTextChanged(object sender, TextChangedEventArgs e)
@@ -70,7 +67,7 @@ namespace FunnySounds.Controls
         {
             if (controledSound != null)
             {
-                mainWindow.RemoveSound(controledSound);
+                mainWindow.RemoveSound(this);
                 mainWindow.SaveUserData();
             }
         }

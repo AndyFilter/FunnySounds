@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace FunnySounds
 {
     public class Structs
     {
         public static string dataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FunnySounds");
-        public static string[] AUDIO_FILE_EXTENSIONS = {".mp3", ".wav", ".ogg", ".m4a", ".flac", ".aac"};
+        public static string[] AUDIO_FILE_EXTENSIONS = { ".mp3", ".wav", ".ogg", ".m4a", ".flac", ".aac" };
         public class Sound
         {
             public string name { get; set; } = "";
@@ -19,6 +15,8 @@ namespace FunnySounds
             public float odds { get; set; } = 0.5f;
             public float volume { get; set; } = 0.5f;
             public bool isEnabled { get; set; } = true;
+
+            public List<System.Windows.Media.MediaPlayer> mediaPlayers = new();
         }
 
         [Serializable]
