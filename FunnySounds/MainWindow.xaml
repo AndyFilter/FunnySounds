@@ -30,8 +30,17 @@
                 <StackPanel x:Name="soundsPanel" HorizontalAlignment="Left"/>
             </ScrollViewer>
             <Separator/>
-            <Label Content="Add Sound" HorizontalAlignment="Center"/>
-            <Grid Margin="0,0,0,10">
+            <Grid Margin="25,3,25,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Separator VerticalAlignment="Stretch"/>
+                <Label Content="Add Sound" HorizontalAlignment="Center" Grid.Column="1"/>
+                <Separator Grid.Column="2"/>
+            </Grid>
+                <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="3*"/>
@@ -68,6 +77,7 @@
                 </TextBlock>
                 <Button Content="Add" Grid.Column="3" Click="AddSoundFromLinkClicked" Grid.ColumnSpan="2"/>
             </Grid>
+            <Separator Margin="0,7,0,7"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -76,7 +86,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Link:" Margin="0,0,5,0"/>
+                <Label Content="Local File:" Margin="0,0,5,0"/>
                 <TextBox x:Name="fileTextBox" Text="Drop file here" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0"  AllowDrop="True" Focusable="False" Drop="FileDropped" PreviewDragOver="TextBox_PreviewDragOver"/>
                 <TextBox x:Name="fileSoundNameBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
                 <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray" Grid.Column="2">
