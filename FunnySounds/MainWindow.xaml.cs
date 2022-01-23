@@ -303,6 +303,7 @@ namespace FunnySounds
                     catch (Exception)
                     {
                         MessageBox.Show("The issue persists, it might be caused by the file, its localization, or my lack of programming skills");
+                        fileTextBox.Text = "Drop file here";
                         return;
                     }
                 }
@@ -314,6 +315,7 @@ namespace FunnySounds
             catch (Exception)
             {
                 MessageBox.Show("There was an error while copying the file");
+                fileTextBox.Text = "Drop file here";
                 return;
             }
             newSound.path = Path.Combine(Structs.dataDir, Path.GetFileName(droppedSoundFile.path));
@@ -326,6 +328,7 @@ namespace FunnySounds
 
             var soundControl = new Controls.SoundControl(newSound);
             soundsPanel.Children.Add(soundControl);
+            fileTextBox.Text = "Drop file here";
             //foreach (var child in soundsPanel.Children)
             //{
             //    var dataContext = (child as Controls.SoundControl).DataContext as Structs.Sound;
@@ -359,12 +362,13 @@ namespace FunnySounds
             if (droppedSoundFile == null) return;
             if (fileSoundNameBox.Text == null || fileSoundNameBox.Text.Length <= 0)
             {
-                MessageBox.Show("Please put in the name/link");
+                MessageBox.Show("Please put in the name/file");
                 return;
             }
             if (userData.sounds.Any(sound => sound.name == droppedSoundFile.name))
             {
                 MessageBox.Show("Sound with this name already exists");
+                fileTextBox.Text = "Drop file here";
                 return;
             }
             droppedSoundFile.name = fileSoundNameBox.Text;
@@ -373,6 +377,7 @@ namespace FunnySounds
 
             var soundControl = new Controls.SoundControl(droppedSoundFile);
             soundsPanel.Children.Add(soundControl);
+            fileTextBox.Text = "Drop file here";
 
             Utils.SaveUserData(userData);
 

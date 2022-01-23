@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FunnySounds"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Funny Sounds" Height="450" Width="580">
+        Title="Funny Sounds" Height="460" Width="580" WindowStyle="SingleBorderWindow" Icon="/Media/FunnySoundsIco.png">
     <Grid Margin="8,8,8,8">
         <StackPanel>
             <Grid>
@@ -48,7 +48,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Link:" Margin="0,0,5,0"/>
+                <Label Content="Link (url):" Margin="0,0,5,0"/>
                 <TextBox x:Name="linkTextBox"  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0" ToolTip="Link should end with any audio extension, cannot be a redirect"/>
                 <TextBlock IsHitTestVisible="False" Text="Link" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray" Grid.Column="1">
                     <TextBlock.Style>
@@ -86,7 +86,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Local File:" Margin="0,0,5,0"/>
+                <Label Content="Local File:"/>
                 <TextBox x:Name="fileTextBox" Text="Drop file here" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="1" Margin="0,0,5,0"  AllowDrop="True" Focusable="False" Drop="FileDropped" PreviewDragOver="TextBox_PreviewDragOver"/>
                 <TextBox x:Name="fileSoundNameBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Margin="0,0,5,0"/>
                 <TextBlock IsHitTestVisible="False" Text="Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray" Grid.Column="2">

@@ -5,6 +5,19 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Media\FunnySoundsIco.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Media\FunnySoundsIco.ai" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Media\FunnySoundsIco.ico" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Media\FunnySoundsIco.png" />
+	</ItemGroup>
 
 </Project>
